@@ -49,6 +49,7 @@ $decodedBody = json_decode($rawBody, true);
 // Retrieve data returned in payload
 $success = $decodedBody['event']['type'];
 $invoiceId = $decodedBody['event']['data']['metadata']['invoice_id'];
+$systemUrlCheck = $decodedBody['event']['data']['metadata']['company_url'];
 $transactionId = $decodedBody['event']['data']['payments']['0']['transaction_id'];
 $paymentAmount = $decodedBody['event']['data']['payments']['0']['value']['local']['amount'];
 $hash = $_SERVER["HTTP_X_CC_WEBHOOK_SIGNATURE"];
@@ -60,6 +61,12 @@ $secretKey = $gatewayParams['webhookSecret'];
 if ($hash != hash_hmac('SHA256', $rawBody , $secretKey)) {
     $transactionStatus = 'Hash Verification Failure';
     $success = false;
+}
+
+// Validate that the transactio is meant for us. This allows multiple sites for the same CC account.
+// WARNING!! Remove the "/" for WHMCS < 7
+if ($CONFIG['SystemURL']."/" != $systemUrlCheck) {
+    die();
 }
 
 // Validate that the invoice is valid.

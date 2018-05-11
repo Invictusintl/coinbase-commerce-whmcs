@@ -117,7 +117,7 @@ function coinbasecommerce_link($params)
     $postfields['description'] = "Invoice - #".$invoiceId;
     $postfields['local_price'] = array('amount' => $amount, 'currency' => $currencyCode);
     $postfields['pricing_type'] = $ccPricingType;
-    $postfields['metadata'] = array('customer_name' => $firstname." ".$lastname, 'customer_email' => $email, 'invoice_id' => $invoiceId);
+    $postfields['metadata'] = array('customer_name' => $firstname." ".$lastname, 'customer_email' => $email, 'invoice_id' => $invoiceId, 'company_url' => $systemUrl);
     $postfields['redirect_url'] = $returnUrl;
     
     // Setup request to send json via POST.
