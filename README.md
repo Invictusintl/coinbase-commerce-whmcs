@@ -47,7 +47,11 @@ readme into your WHMCS installation.
 6. **Activate the Payment Gateway.** To do this visit your Payment Gateways in WHMCS. This is located at
 : _**Setup** -> **Payments** -> **Payment Gateways**_. This Module will be called _Coinbase Commerce_.
 
-7. **Customize your gateway settings** with the information we gathered above. You should now be set!
+7. **Customize your gateway settings** with the information we gathered above.
+
+8. **Update your webhook URL to point to your callback file.** Paste the full URI of where your callback file is something like: `https://www.yourwebsite.com/whmcs_root/modules/gateways/callback/coinbasecommerce.php`. So that your logs don't fill up super fast make sure you only select `charge:confirmed` and `charge:failed`. See the screenshot below for an example of how you should set up your webhook. You should now be set!
+
+<img src="https://i.imgur.com/qoOJlzw.jpg">
 
 ## Minimum Requirements ##
 
