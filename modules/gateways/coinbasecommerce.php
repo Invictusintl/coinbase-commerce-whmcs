@@ -4,19 +4,19 @@
  *
  * Copyright (c) 2018 Invictus International INC
  *                    Phillip Thurston, <pthurston@goinvictus.com>
- * 
+ *
  * This file is part of Coinbase-Commerce WHMCS Gateway
- * 
- * The Coinbase-Commerce WHMCS Gateway is free software: you can 
- * redistribute it and/or modify it under the terms of the GNU 
+ *
+ * The Coinbase-Commerce WHMCS Gateway is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation,
  * either version 3 of the License, or any later version.
- * 
- * The Coinbase-Commerce WHMCS Gateway is distributed in the hope that 
- * it will be useful, but WITHOUT ANY WARRANTY; without even the 
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+ *
+ * The Coinbase-Commerce WHMCS Gateway is distributed in the hope that
+ * it will be useful, but WITHOUT ANY WARRANTY; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
  * PURPOSE.  See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
  *
@@ -114,10 +114,10 @@ function coinbasecommerce_link($params)
     // Compiled Post from Variables
     $postfields = array();
     $postfields['name'] = $description;
-    $postfields['description'] = "Invoice - #".$invoiceId;
+    $postfields['description'] = "Invoice - #" . $invoiceId;
     $postfields['local_price'] = array('amount' => $amount, 'currency' => $currencyCode);
     $postfields['pricing_type'] = $ccPricingType;
-    $postfields['metadata'] = array('customer_name' => $firstname." ".$lastname, 'customer_email' => $email, 'invoice_id' => $invoiceId);
+    $postfields['metadata'] = array('customer_name' => $firstname . " " . $lastname, 'customer_email' => $email, 'invoice_id' => $invoiceId);
     $postfields['redirect_url'] = $returnUrl;
     
     // Setup request to send json via POST.
@@ -125,9 +125,9 @@ function coinbasecommerce_link($params)
     
     // Contact Coinbase Commerce and get URL data
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL,$ccUrl);
+    curl_setopt($ch, CURLOPT_URL, $ccUrl);
     curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS,$payload);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
     $headers = [
@@ -138,13 +138,13 @@ function coinbasecommerce_link($params)
     
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     
-    $server_output = curl_exec ($ch);
-    curl_close ($ch);
+    $server_output = curl_exec($ch);
+    curl_close($ch);
     
     // Convert response to PHP array and print button
     $payment_url = json_decode($server_output, true);
 
-    $htmlOutput = '<a class="btn btn-success btn-sm" id="btnPayNow" href="'.$payment_url['data']['hosted_url'].'" rel="noopener noreferrer" target="_blank"><i class="fa fa-btc"></i>&nbsp;'.$langPayNow.'</a>';
+    $htmlOutput = '<a class="btn btn-success btn-sm" id="btnPayNow" href="' . $payment_url['data']['hosted_url'] . '" rel="noopener noreferrer" target="_blank"><i class="fa fa-btc"></i>&nbsp;' . $langPayNow . '</a>';
 
     return $htmlOutput;
 }

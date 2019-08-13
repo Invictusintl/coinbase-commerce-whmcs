@@ -4,19 +4,19 @@
  *
  * Copyright (c) 2018 Invictus International INC
  *                    Phillip Thurston, <pthurston@goinvictus.com>
- * 
+ *
  * This file is part of Coinbase-Commerce WHMCS Gateway
- * 
- * The Coinbase-Commerce WHMCS Gateway is free software: you can 
- * redistribute it and/or modify it under the terms of the GNU 
+ *
+ * The Coinbase-Commerce WHMCS Gateway is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU
  * General Public License as published by the Free Software Foundation,
  * either version 3 of the License, or any later version.
- * 
- * The Coinbase-Commerce WHMCS Gateway is distributed in the hope that 
- * it will be useful, but WITHOUT ANY WARRANTY; without even the 
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+ *
+ * The Coinbase-Commerce WHMCS Gateway is distributed in the hope that
+ * it will be useful, but WITHOUT ANY WARRANTY; without even the
+ * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
  * PURPOSE.  See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
  *
@@ -57,7 +57,7 @@ $transactionStatus = ($success == 'charge:confirmed') ? 'Success' : 'Failure';
 
 // Validate that the payload is valid
 $secretKey = $gatewayParams['webhookSecret'];
-if ($hash != hash_hmac('SHA256', $rawBody , $secretKey)) {
+if ($hash != hash_hmac('SHA256', $rawBody, $secretKey)) {
     $transactionStatus = 'Hash Verification Failure';
     $success = false;
 }
@@ -72,7 +72,6 @@ checkCbTransID($transactionId);
 logTransaction($gatewayParams['name'], $rawBody, $transactionStatus);
 
 if ($success == 'charge:confirmed') {
-
     addInvoicePayment(
         $invoiceId,
         $transactionId,
@@ -80,5 +79,4 @@ if ($success == 'charge:confirmed') {
         0,
         $gatewayModuleName
     );
-
 }
