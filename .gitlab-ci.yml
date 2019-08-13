@@ -1,0 +1,33 @@
+image: gcr.io/netzilla-registry/php
+
+stages:
+- test
+- deploy
+
+include:
+    - project: 'netzilla/ci-templates'
+      file: '/global.yml'
+    - project: 'netzilla/ci-templates'
+      file: '/src/php-tests.yml'
+
+Deploy NetZilla Production:
+  stage: deploy
+  extends:
+    - .lftp
+  variables:
+    DEPLOY_USERNAME: $NZ_MODULES_USER
+    DEPLOY_PASSWORD: $NZ_MODULES_PASS
+    DEPLOY_DIR_SRC: modules/
+  only:
+    - master
+
+Deploy TSHQ Production:
+  stage: deploy
+  extends:
+    - .lftp
+  variables:
+    DEPLOY_USERNAME: $TSHQ_MODULES_USER
+    DEPLOY_PASSWORD: $TSHQ_MODULES_PASS
+    DEPLOY_DIR_SRC: modules/
+  only:
+    - master
