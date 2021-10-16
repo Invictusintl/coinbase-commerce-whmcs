@@ -141,7 +141,7 @@ function coinbasecommerce_link($params)
     $email = $params['clientdetails']['email'];
 
     // System Parameters
-    $returnUrl = $params['returnurl'];
+    $returnUrl = $params['returnurl'] . '&canceled=';
     $langPayNow = $params['langpaynow'];
 
     // Compiled Post from Variables
@@ -151,8 +151,8 @@ function coinbasecommerce_link($params)
     $postfields['local_price'] = array('amount' => $amount, 'currency' => $currencyCode);
     $postfields['pricing_type'] = $ccPricingType;
     $postfields['metadata'] = array('customer_name' => $firstname . " " . $lastname, 'customer_email' => $email, 'invoice_id' => $invoiceId);
-    $postfields['redirect_url'] = $returnUrl;
-    $postfields['cancel_url'] = $returnUrl;
+    $postfields['redirect_url'] = $returnUrl . 'no';
+    $postfields['cancel_url'] = $returnUrl . 'yes';
 
     // Setup request to send json via POST.
     $payload = json_encode($postfields, JSON_UNESCAPED_SLASHES);
